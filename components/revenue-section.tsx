@@ -1,5 +1,10 @@
 "use client"
-
+/**
+ * Revenue model section — how your project might make money (or why it’s free). Same
+ * pattern as the Problems section: a horizontal row of cards, custom cursor on hover,
+ * and scroll-in animations. Edit the `revenueModels` array to describe your revenue
+ * streams (or remove this section from the page if you don’t need it).
+ */
 import { useRef, useState, useEffect } from "react"
 import { cn } from "@/lib/utils"
 import gsap from "gsap"
@@ -7,6 +12,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger"
 
 gsap.registerPlugin(ScrollTrigger)
 
+/** Your revenue ideas. Each item becomes one card in the horizontal scroll. */
 const revenueModels = [
   {
     title: "Project-Based Commission",
@@ -32,8 +38,10 @@ export function RevenueSection() {
   const headerRef = useRef<HTMLDivElement>(null)
   const cardsRef = useRef<HTMLDivElement>(null)
   const cursorRef = useRef<HTMLDivElement>(null)
+  /** Tracks whether the mouse is over this section so we show/hide the follow cursor. */
   const [isHovering, setIsHovering] = useState(false)
 
+  /** Custom cursor: a dot that follows the mouse inside this section. Same idea as SignalsSection. */
   useEffect(() => {
     if (!sectionRef.current || !cursorRef.current) return
 
@@ -67,11 +75,12 @@ export function RevenueSection() {
     }
   }, [])
 
+  /** Scroll animations: header and cards slide in when the section enters view. */
   useEffect(() => {
     if (!sectionRef.current || !headerRef.current || !cardsRef.current) return
 
     const ctx = gsap.context(() => {
-      // Header slide in from left
+      /* Header slide in from left */
       gsap.fromTo(
         headerRef.current,
         { x: -60, opacity: 0 },
@@ -114,6 +123,7 @@ export function RevenueSection() {
 
   return (
     <section id="revenue" ref={sectionRef} className="relative py-32 pl-6 md:pl-28">
+      {/* Follow cursor dot — only visible when isHovering is true. */}
       <div
         ref={cursorRef}
         className={cn(
@@ -124,7 +134,7 @@ export function RevenueSection() {
         )}
       />
 
-      {/* Section header */}
+      {/* Section header — id="revenue" is used by the side nav. */}
       <div ref={headerRef} className="mb-16 pr-6 md:pr-12">
         <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-accent">04 / Revenue</span>
         <h2 className="mt-4 font-[var(--font-bebas)] text-5xl md:text-7xl tracking-tight">
@@ -132,7 +142,7 @@ export function RevenueSection() {
         </h2>
       </div>
 
-      {/* Horizontal scroll container */}
+      {/* Horizontal scroll — one ref holds both scrollRef and cardsRef for animation targets. */}
       <div
         ref={(el) => {
           scrollRef.current = el
@@ -149,6 +159,7 @@ export function RevenueSection() {
   )
 }
 
+/** One revenue card. Same paper-card style as SignalCard; change title/description in revenueModels. */
 function RevenueCard({
   model,
   index,

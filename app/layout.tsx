@@ -20,7 +20,7 @@ const bebasNeue = Bebas_Neue({ weight: "400", subsets: ["latin"], variable: "--f
 export const metadata: Metadata = {
   title: "BUILDIT — Build Skills. Build Projects. Build Proof.",
   description:
-    "A collaborative platform where students learn by building real projects under expert guidance.",
+    "Template: tinker and change texts as per your project. Includes problems, solution, project review video, MVP (at least 4), revenue model, credits, and feedback form.",
 }
 
 export default function RootLayout({

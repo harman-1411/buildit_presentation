@@ -1,3 +1,8 @@
+/**
+ * In Next.js, app/page.tsx is the home page — when someone visits "/" they get this.
+ * We import each section as a component and render them in order; the page is just
+ * a stack of sections. SideNav stays fixed on the left and scrolls to each section by id.
+ */
 import { HeroSection } from "@/components/hero-section"
 import { SignalsSection } from "@/components/signals-section"
 import { WorkSection } from "@/components/work-section"
@@ -13,6 +18,7 @@ export default function Page() {
       <SideNav />
       <div className="grid-bg fixed inset-0 opacity-30" aria-hidden="true" />
 
+      {/* Sections in order: Hero → Problems → Solution → Video → MVP → Revenue → Credits. */}
       <div className="relative z-10">
         <HeroSection />
         <SignalsSection />

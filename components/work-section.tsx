@@ -1,5 +1,10 @@
 "use client"
-
+/**
+ * The "Solution" section — where you explain how you’d solve the problems. It’s a grid of
+ * steps that auto-highlights one by one when you scroll here, then highlights all, then
+ * repeats. Good place to show your process or solution flow. Edit the `experiments` array
+ * to change the steps (titles, descriptions, and grid sizes).
+ */
 import { useState, useRef, useEffect } from "react"
 import { cn } from "@/lib/utils"
 import gsap from "gsap"
@@ -7,6 +12,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger"
 
 gsap.registerPlugin(ScrollTrigger)
 
+/** Your solution steps. "span" controls grid cell size (e.g. col-span-2 row-span-2 for a big card). */
 const experiments = [
   {
     title: "Project Posted",
@@ -62,9 +68,12 @@ export function WorkSection() {
   const sectionRef = useRef<HTMLElement>(null)
   const headerRef = useRef<HTMLDivElement>(null)
   const gridRef = useRef<HTMLDivElement>(null)
+  /** Which step is currently highlighted (0-based index), or null when we’re in "highlight all" phase. */
   const [highlightedStep, setHighlightedStep] = useState<number | null>(0)
+  /** When true, every card is highlighted at once (after cycling through each step). */
   const [highlightAll, setHighlightAll] = useState(false)
 
+  /** Scroll-in animation: header and grid cards animate in when the section enters view. */
   useEffect(() => {
     if (!sectionRef.current || !headerRef.current || !gridRef.current) return
 
@@ -107,7 +116,11 @@ export function WorkSection() {
     return () => ctx.revert()
   }, [])
 
-  // Auto-highlight cycling effect - starts when section is in view
+  /**
+   * Auto-highlight cycling: when you scroll this section into view, we highlight step 0,
+   * then 1, 2, … then "highlight all", then start over. ScrollTrigger’s onEnter / onLeaveBack
+   * start the cycle; onLeave pauses it so we don’t run timers when you’re not looking.
+   */
   useEffect(() => {
     if (!sectionRef.current) return
 
@@ -178,7 +191,7 @@ export function WorkSection() {
 
   return (
     <section ref={sectionRef} id="work" className="relative py-32 pl-6 md:pl-28 pr-6 md:pr-12">
-      {/* Section header */}
+      {/* Section header — id="work" is used by the side nav to scroll here. */}
       <div ref={headerRef} className="mb-16 flex items-end justify-between">
         <div>
           <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-accent">02 / SOLUTION</span>
@@ -191,7 +204,7 @@ export function WorkSection() {
         </p>
       </div>
 
-      {/* Asymmetric grid */}
+      {/* Asymmetric grid — each WorkCard gets its size from experiment.span (e.g. col-span-2 row-span-2). */}
       <div
         ref={gridRef}
         className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 auto-rows-[180px] md:auto-rows-[200px]"
@@ -209,6 +222,7 @@ export function WorkSection() {
   )
 }
 
+/** One step card. isHighlighted comes from the auto-cycle or from hover; when true the card gets accent border and shows description. */
 function WorkCard({
   experiment,
   index,
@@ -226,6 +240,7 @@ function WorkCard({
   const [isHovered, setIsHovered] = useState(false)
   const cardRef = useRef<HTMLElement>(null)
 
+  /** Card looks "active" when either the user hovers it or the auto-highlight picked it. */
   const isActive = isHovered || isHighlighted
 
   return (

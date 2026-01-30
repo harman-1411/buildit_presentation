@@ -1,5 +1,9 @@
 "use client"
-
+/**
+ * Project review video section. Put your demo or feedback video here. Right now it’s
+ * a placeholder box — when you have a YouTube (or other) embed URL, replace the inner
+ * div with an <iframe> using that URL so the video actually plays on the page.
+ */
 import { useRef, useEffect } from "react"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
@@ -8,42 +12,40 @@ gsap.registerPlugin(ScrollTrigger)
 
 export function VideoSection() {
   const sectionRef = useRef<HTMLElement>(null)
-  const contentRef = useRef<HTMLDivElement>(null)
-  const videoRef = useRef<HTMLDivElement>(null)
+  const headerRef = useRef<HTMLDivElement>(null)
+  const videoWrapperRef = useRef<HTMLDivElement>(null)
 
+  /** Scroll-in animation: header and video area slide in when the section enters view. */
   useEffect(() => {
-    if (!sectionRef.current || !contentRef.current || !videoRef.current) return
+    if (!sectionRef.current || !headerRef.current || !videoWrapperRef.current) return
 
     const ctx = gsap.context(() => {
-      // Text fade in
       gsap.fromTo(
-        contentRef.current,
-        { opacity: 0, y: 40 },
+        headerRef.current,
+        { x: -60, opacity: 0 },
         {
+          x: 0,
           opacity: 1,
-          y: 0,
           duration: 1,
           ease: "power3.out",
           scrollTrigger: {
-            trigger: contentRef.current,
+            trigger: headerRef.current,
             start: "top 85%",
             toggleActions: "play none none reverse",
           },
         },
       )
-
-      // Video fade in
       gsap.fromTo(
-        videoRef.current,
-        { opacity: 0, y: 60 },
+        videoWrapperRef.current,
+        { y: 40, opacity: 0 },
         {
-          opacity: 1,
           y: 0,
-          duration: 1.2,
+          opacity: 1,
+          duration: 0.8,
           ease: "power3.out",
           scrollTrigger: {
-            trigger: videoRef.current,
-            start: "top 85%",
+            trigger: videoWrapperRef.current,
+            start: "top 90%",
             toggleActions: "play none none reverse",
           },
         },
@@ -54,33 +56,30 @@ export function VideoSection() {
   }, [])
 
   return (
-    <section ref={sectionRef} id="video" className="relative py-32 pl-6 md:pl-28 pr-6 md:pr-12">
-      <div ref={contentRef} className="mb-12">
-        <p className="font-mono text-lg md:text-xl text-foreground leading-relaxed max-w-3xl">
-          BHAI, NOT PRACTICALLY POSSIBLE... Wait my dear bhai listen to our interactions
+    <section id="video" ref={sectionRef} className="relative py-32 pl-6 md:pl-28">
+      {/* Section header — id="video" is used by the side nav. */}
+      <div ref={headerRef} className="mb-12 pr-6 md:pr-12">
+        <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-accent">02.5 / Video</span>
+        <h2 className="mt-4 font-[var(--font-bebas)] text-5xl md:text-7xl tracking-tight">
+          PROJECT REVIEW <span className="text-accent">VIDEO</span>
+        </h2>
+      </div>
+
+      {/* Instructional text — you can change or remove this. */}
+      <div className="mb-10 pr-6 md:pr-12 max-w-3xl">
+        <p className="font-mono text-sm text-muted-foreground leading-relaxed">
+          Make a video asking review of your project—how it is helpful to your customer who could use it, or in general to your friends. Take feedbacks and add it in your video.
         </p>
       </div>
 
-      <div ref={videoRef} className="relative w-full max-w-5xl aspect-video bg-card border border-border/50 rounded-sm overflow-hidden">
-        {/* Video placeholder - replace with actual video element */}
-        <div className="absolute inset-0 flex items-center justify-center bg-muted/20">
-          <div className="text-center">
-            <p className="font-mono text-sm text-muted-foreground mb-4">Video will be embedded here</p>
-            <p className="font-mono text-xs text-muted-foreground/60">
-              Replace this div with your video element (iframe, video tag, etc.)
-            </p>
-          </div>
-        </div>
-        {/* 
-        Example video embed:
-        <iframe
-          className="absolute inset-0 w-full h-full"
-          src="YOUR_VIDEO_URL"
-          title="Video"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-        />
-        */}
+      {/* Video placeholder — replace this whole div with an <iframe> when you have your video embed URL. */}
+      <div
+        ref={videoWrapperRef}
+        className="relative w-full max-w-4xl pr-6 md:pr-12 aspect-video bg-card border border-border/50 flex items-center justify-center"
+      >
+        <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
+          Video placeholder — add your review video embed URL here
+        </p>
       </div>
     </section>
   )

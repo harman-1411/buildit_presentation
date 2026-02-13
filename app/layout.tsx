@@ -18,10 +18,19 @@ const ibmPlexMono = IBM_Plex_Mono({
 const bebasNeue = Bebas_Neue({ weight: "400", subsets: ["latin"], variable: "--font-bebas" })
 
 export const metadata: Metadata = {
-  title: "BUILDIT — Build Skills. Build Projects. Build Proof.",
+  title: "RouteX – Intelligent Logistics Route Optimization Using DSA",
   description:
-    "Template: tinker and change texts as per your project. Includes problems, solution, project review video, MVP (at least 4), revenue model, credits, and feedback form.",
-}
+    "RouteX is a dynamic route optimization platform for logistics and transportation. It leverages Graph data structures and Dijkstra’s Algorithm to compute shortest paths, reduce fuel costs, and improve operational efficiency.",
+  keywords: [
+    "Route Optimization",
+    "DSA Project",
+    "Dijkstra Algorithm",
+    "Logistics System",
+    "Graph Algorithms",
+    "Transportation Optimization"
+  ],
+  authors: [{ name: "Harmanjot Singh" }],
+};
 
 export default function RootLayout({
   children,
@@ -38,5 +47,7 @@ export default function RootLayout({
         <Analytics />
       </body>
     </html>
+    
   )
 }
+
